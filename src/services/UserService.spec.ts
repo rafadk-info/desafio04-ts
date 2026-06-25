@@ -9,4 +9,16 @@ describe('UserService', () => {
         userService.createUser('nath', 'nath@test.com');
         expect(mockConsole).toHaveBeenCalledWith('DB atualizado', mockDb)
     })
+
+    it('Deve deletar um usuário existente', () => {
+        userService.createUser('joana', 'joana@test.com')
+        const result = userService.deleteUser('joana')
+        expect(result).toBe(true)
+        expect(mockDb.find(u => u.name === 'joana')).toBeUndefined()
+    })
+
+    it('Deve retornar false ao tentar deletar usuário inexistente', () => {
+        const result = userService.deleteUser('inexistente')
+        expect(result).toBe(false)
+    })
 })
